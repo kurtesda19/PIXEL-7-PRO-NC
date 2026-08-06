@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Native Camera Starter</string>
+    <string name="subtitle">Pixel 7 Pro • Bypass • 8-bit / 10-bit HLG</string>
+    <string name="record">● REC</string>
+    <string name="stop">■ STOP</string>
+    <string name="hlg_on">10-bit HLG (Pro)</string>
+    <string name="hlg_off">8-bit SDR</string>
+    <string name="boost_on">Boost ISO ON</string>
+    <string name="boost_off">Boost ISO OFF</string>
+    <string name="eis">EIS</string>
+    <string name="ois">OIS</string>
+    <string name="lens_wide">1× Wide</string>
+    <string name="lens_ultrawide">0.5× UW</string>
+    <string name="lens_tele">5× Tele</string>
+    <string name="help_title">How to get the clean image</string>
+    <string name="help_text">8-bit = ready to share. 10-bit HLG = film it, then grade: In DaVinci, use the free LUT or 3 nodes: [01] CST HLG Rec.2100 → DWG / [02] YOUR GRADE / [03] CST DWG → Rec.709 2.4. Or upload HLG straight to Instagram Reels for HDR.</string>
+</resources>
