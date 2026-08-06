@@ -4,408 +4,710 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="#000000">
 
-    <!-- Preview -->
+    <!-- Camera Preview - Full screen -->
     <TextureView
         android:id="@+id/textureView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottomControls"
+        app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Top Bar -->
+    <!-- Top Info Bar -->
     <LinearLayout
         android:id="@+id/topBar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#99000000"
-        android:padding="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:background="#66000000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
+            android:id="@+id/tvRemain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.04" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/subtitle"
-            android:textColor="@color/accent"
+            android:text="REMAIN: -- GB (-- min) • 10-bit HLG"
+            android:textColor="#E0E0E0"
             android:textSize="11sp"
+            android:letterSpacing="0.05"
+            android:fontFamily="monospace"
             android:alpha="0.9" />
 
+        <View
+            android:layout_width="140dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_storage_bar"
+            android:alpha="0.8" />
+
+        <!-- Status / HDR indicator -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ready • Tap ● to record"
+            android:textColor="#8BC34A"
+            android:textSize="9sp"
+            android:layout_marginTop="5dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvRecIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="● REC 00:00"
+            android:textColor="#FF1744"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:background="#CC000000"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="5dp"
+            android:visibility="gone"
+            android:layout_marginTop="6dp" />
+
+    </LinearLayout>
+
+    <!-- CENTER OVERLAY: Lens selector + Record row + Badges (like reference screenshot) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/centerOverlay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Lens Selector - Centered pills like .6x 1x 2x 5x 10x -->
+        <LinearLayout
+            android:id="@+id/lensRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/btnLensUW"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/bg_lens_unselected"
+                android:gravity="center"
+                android:text=".6x"
+                android:textColor="#B0B0B0"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/btnLensWide"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/bg_lens_selected"
+                android:gravity="center"
+                android:text="1x"
+                android:textColor="white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/btnLens2x"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/bg_lens_unselected"
+                android:gravity="center"
+                android:text="2x"
+                android:textColor="#B0B0B0"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/btnLensTele"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/bg_lens_unselected"
+                android:gravity="center"
+                android:text="5x"
+                android:textColor="#B0B0B0"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/btnLens10x"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/bg_lens_unselected"
+                android:gravity="center"
+                android:text="10x"
+                android:textColor="#B0B0B0"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
+
+        </LinearLayout>
+
+        <!-- Record Row: Gallery | ● | Flip -->
+        <LinearLayout
+            android:id="@+id/recordRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:weightSum="3"
+            android:paddingHorizontal="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/lensRow"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!-- Gallery Preview -->
+            <FrameLayout
+                android:id="@+id/btnGallery"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight="0.8"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/bg_gallery_thumb"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/imgGalleryThumb"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:alpha="0.85"
+                    tools:src="@android:drawable/ic_menu_gallery" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#30000000" />
+            </FrameLayout>
+
+            <!-- Central Record Button -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2"
+                android:gravity="center">
+
+                <View
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_record_outer" />
+
+                <TextView
+                    android:id="@+id/btnRecord"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_record_inner"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:elevation="2dp" />
+            </FrameLayout>
+
+            <!-- Flip Camera -->
+            <FrameLayout
+                android:id="@+id/btnFlip"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight="0.8"
+                android:layout_marginStart="24dp"
+                android:background="@drawable/bg_flip_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="↻"
+                    android:textColor="white"
+                    android:textSize="22sp"
+                    android:rotation="45"
+                    android:layout_gravity="center" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- Bottom badges row (over preview, above bottom panel) -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@+id/recordRow"
+            android:layout_marginTop="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingHorizontal="14dp">
+
+            <TextView
+                android:id="@+id/btnResolution"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_badge"
+                android:gravity="center"
+                android:paddingHorizontal="14dp"
+                android:text="4K 30fps"
+                android:textColor="white"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.04"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/btnHLG"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_badge_hlg"
+                android:gravity="center"
+                android:paddingHorizontal="14dp"
+                android:text="8-bit SAFE"
+                android:textColor="white"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.04"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- BOTTOM CONTROL PANEL - Professional Modern Dark Bar -->
+    <LinearLayout
+        android:id="@+id/bottomPanel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#F50A0A0A"
+        android:padding="10dp"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Hidden legacy switches (kept for logic, but now controlled via pills) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchHLG"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchBoost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchEIS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchOIS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchManual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderBitrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tvBitrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tvHLGSupport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tvFileInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.widget.AutoCompleteTextView
+                android:id="@+id/spinnerResolution"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.widget.AutoCompleteTextView
+                android:id="@+id/spinnerFps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleGroupLens"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderIso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderShutter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderFocus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tvIsoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tvShutterLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tvFocusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/layoutManual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnHelp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- ROW 1: ISO | SHUTTER | FOCUS | Video/Photo Toggle -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:id="@+id/pillIso"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/bg_pill"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ISO"
+                    android:textColor="#8A8A8A"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08" />
+
+                <TextView
+                    android:id="@+id/tvPillIso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="420"
+                    android:textColor="white"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="1dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pillShutter"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/bg_pill"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SHUTTER"
+                    android:textColor="#8A8A8A"
+                    android:textSize="8sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.06" />
+
+                <TextView
+                    android:id="@+id/tvPillShutter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1/30"
+                    android:textColor="white"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="1dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pillFocus"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/bg_pill"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FOCUS"
+                    android:textColor="#8A8A8A"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08" />
+
+                <TextView
+                    android:id="@+id/tvPillFocus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11.6 dpt"
+                    android:textColor="white"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="1dp" />
+            </LinearLayout>
+
+            <!-- Video / Photo Toggle -->
+            <LinearLayout
+                android:id="@+id/toggleVideoPhoto"
+                android:layout_width="78dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/bg_toggle_video"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/iconVideo"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/bg_toggle_selected"
+                    android:gravity="center"
+                    android:text="▶"
+                    android:textColor="white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/iconPhoto"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:gravity="center"
+                    android:text="◎"
+                    android:textColor="#6A6A6A"
+                    android:textSize="14sp"
+                    android:layout_marginStart="2dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ROW 2: EV | TEMP | STAB | Palette | Settings -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="8dp">
 
-            <TextView
-                android:id="@+id/tvStatus"
+            <LinearLayout
+                android:id="@+id/pillEv"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Initializing…"
-                android:textColor="@color/text_second"
-                android:textSize="11sp"
-                android:maxLines="2" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnHelp"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:text="HELP"
-                android:textSize="10sp"
-                app:cornerRadius="16dp"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:insetTop="0dp"
-                android:insetBottom="0dp" />
-        </LinearLayout>
-
-        <!-- Lens switcher -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:gravity="center">
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/toggleGroupLens"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnLensUW"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="@string/lens_ultrawide"
-                    android:textSize="11sp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnLensWide"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="@string/lens_wide"
-                    android:textSize="11sp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnLensTele"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="@string/lens_tele"
-                    android:textSize="11sp" />
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Recording indicator -->
-    <TextView
-        android:id="@+id/tvRecIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="● REC 00:00"
-        android:textColor="@color/red_rec"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        android:background="#CC000000"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="6dp"
-        android:layout_margin="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/topBar"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- Bottom Controls -->
-    <ScrollView
-        android:id="@+id/bottomControls"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#F50F0F0F"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="14dp">
-
-            <!-- Primary row: HLG + Boost + Bitrate -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchHLG"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/hlg_off"
-                    android:textColor="@color/text_primary"
-                    android:textSize="12sp" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchBoost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/boost_off"
-                    android:textColor="@color/text_primary"
-                    android:textSize="12sp"
-                    android:layout_marginStart="12dp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvHLGSupport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Checking HLG support…"
-                android:textColor="@color/text_second"
-                android:textSize="10sp"
-                android:layout_marginTop="4dp" />
-
-            <!-- Stabilization -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="12dp">
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchEIS"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="@string/eis"
-                    android:textColor="@color/text_primary"
-                    android:textSize="12sp" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchOIS"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/ois"
-                    android:textColor="@color/text_primary"
-                    android:textSize="12sp" />
-            </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tip: Pixel 7 Pro handheld = EIS ON, OIS OFF (less micro-jitter). Tripod = both OFF."
-                android:textColor="#FF8BC34A"
-                android:textSize="10sp"
-                android:layout_marginTop="4dp" />
-
-            <!-- Bitrate -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Video Bitrate (quality vs file size)"
-                android:textColor="@color/text_second"
-                android:textSize="11sp"
-                android:layout_marginTop="14dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <com.google.android.material.slider.Slider
-                    android:id="@+id/sliderBitrate"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:valueFrom="20"
-                    android:valueTo="120"
-                    android:value="80"
-                    android:stepSize="10"
-                    app:labelBehavior="withinBounds" />
-
-                <TextView
-                    android:id="@+id/tvBitrate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="80 Mbps"
-                    android:textColor="@color/accent"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:minWidth="70dp"
-                    android:gravity="end" />
-            </LinearLayout>
-
-            <!-- Resolution / FPS -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="6dp"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:hint="Resolution">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/spinnerResolution"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textSize="12sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="6dp"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:hint="FPS">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/spinnerFps"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textSize="12sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <!-- Manual controls toggle -->
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchManual"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Manual (ISO / Shutter / Focus) — disable to use Auto"
-                android:textColor="@color/text_primary"
-                android:textSize="11sp"
-                android:layout_marginTop="14dp" />
-
-            <LinearLayout
-                android:id="@+id/layoutManual"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:alpha="0.95">
-
-                <TextView
-                    android:id="@+id/tvIsoLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="ISO: 400"
-                    android:textColor="@color/text_second"
-                    android:textSize="11sp"
-                    android:layout_marginTop="8dp" />
-                <com.google.android.material.slider.Slider
-                    android:id="@+id/sliderIso"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:valueFrom="100"
-                    android:valueTo="3200"
-                    android:value="400"
-                    android:stepSize="100" />
-
-                <TextView
-                    android:id="@+id/tvShutterLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Shutter: 1/60s"
-                    android:textColor="@color/text_second"
-                    android:textSize="11sp" />
-                <com.google.android.material.slider.Slider
-                    android:id="@+id/sliderShutter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:valueFrom="0"
-                    android:valueTo="6"
-                    android:value="3"
-                    android:stepSize="1" />
-
-                <TextView
-                    android:id="@+id/tvFocusLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Focus: Auto (Tap slider for manual)"
-                    android:textColor="@color/text_second"
-                    android:textSize="11sp" />
-                <com.google.android.material.slider.Slider
-                    android:id="@+id/sliderFocus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:valueFrom="0"
-                    android:valueTo="10"
-                    android:value="0"
-                    android:stepSize="1" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Focus 0 = Auto, 1-10 = Close to Infinity"
-                    android:textColor="#FF777777"
-                    android:textSize="9sp" />
-            </LinearLayout>
-
-            <!-- Record button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRecord"
-                android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="@string/record"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.06"
-                app:cornerRadius="28dp"
-                android:layout_marginTop="18dp"
-                android:backgroundTint="@color/red_rec"
-                app:icon="@android:drawable/ic_media_play"
-                app:iconGravity="textStart"
-                app:iconPadding="8dp" />
-
-            <TextView
-                android:id="@+id/tvFileInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Files save to: DCIM/NativeCamera • No cloud • No tracking"
-                android:textColor="@color/text_second"
-                android:textSize="10sp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/bg_pill"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:layout_marginTop="8dp" />
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="4dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Pixel 7 Pro tip: HLG looks washed out in gallery — that's normal. It's HDR. View on phone's HDR screen or grade to Rec.709. Ready-to-post is 8-bit."
-                android:textColor="#FF888888"
-                android:textSize="9sp"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EV"
+                    android:textColor="#8A8A8A"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08" />
+
+                <TextView
+                    android:id="@+id/tvPillEv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+0.0"
+                    android:textColor="white"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="1dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pillWb"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/bg_pill"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:layout_marginTop="6dp" />
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TEMP"
+                    android:textColor="#8A8A8A"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08" />
+
+                <TextView
+                    android:id="@+id/tvPillWb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AWB"
+                    android:textColor="white"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="1dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pillStab"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/bg_pill"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STAB"
+                    android:textColor="#8A8A8A"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08" />
+
+                <TextView
+                    android:id="@+id/tvPillStab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EIS"
+                    android:textColor="white"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="1dp" />
+            </LinearLayout>
+
+            <!-- Palette / Filters -->
+            <FrameLayout
+                android:id="@+id/btnPalette"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/bg_pill"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="◈"
+                    android:textColor="#9A9A9A"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:alpha="0.9" />
+            </FrameLayout>
+
+            <!-- Settings Gear -->
+            <FrameLayout
+                android:id="@+id/btnSettings"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_pill"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚙"
+                    android:textColor="#9A9A9A"
+                    android:textSize="18sp"
+                    android:layout_gravity="center" />
+            </FrameLayout>
         </LinearLayout>
-    </ScrollView>
+
+        <!-- Tiny footer hint (professional) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Native Bypass • Tap pill to adjust • Long-press for auto"
+            android:textColor="#4A4A4A"
+            android:textSize="9sp"
+            android:gravity="center"
+            android:letterSpacing="0.05"
+            android:layout_marginTop="7dp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
