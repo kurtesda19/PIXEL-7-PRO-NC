@@ -18,16 +18,17 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle 8.6
-        uses: gradle/actions/setup-gradle@v3
+      - name: Setup Gradle 8.6 (cache disabled - GitHub cache is down)
+        uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.6
+          cache-disabled: true
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Build Debug APK (no wrapper needed)
-        run: gradle assembleDebug --stacktrace
+      - name: Build Debug APK
+        run: gradle assembleDebug --stacktrace --no-daemon
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
