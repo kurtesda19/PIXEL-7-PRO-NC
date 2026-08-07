@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Adjust"
-        android:textColor="white"
+        android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -33,8 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:activeTrackColor="#FF3B30"
-        app:thumbColor="#FF3B30"
-        app:inactiveTrackColor="#33FFFFFF" />
+        
+        
+         />
 
 </LinearLayout>

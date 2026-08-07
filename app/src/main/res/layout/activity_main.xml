@@ -119,7 +119,7 @@
                 android:background="@drawable/bg_lens_selected"
                 android:gravity="center"
                 android:text="1x"
-                android:textColor="white"
+                android:textColor="#FFFFFF"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:clickable="true"
@@ -249,7 +249,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="↻"
-                    android:textColor="white"
+                    android:textColor="#FFFFFF"
                     android:textSize="22sp"
                     android:rotation="45"
                     android:layout_gravity="center" />
@@ -276,7 +276,7 @@
                 android:gravity="center"
                 android:paddingHorizontal="14dp"
                 android:text="4K 30fps"
-                android:textColor="white"
+                android:textColor="#FFFFFF"
                 android:textSize="11sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.04"
@@ -296,7 +296,7 @@
                 android:gravity="center"
                 android:paddingHorizontal="14dp"
                 android:text="8-bit SAFE"
-                android:textColor="white"
+                android:textColor="#FFFFFF"
                 android:textSize="11sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.04"
@@ -441,7 +441,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="420"
-                    android:textColor="white"
+                    android:textColor="#FFFFFF"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_marginTop="1dp" />
@@ -474,7 +474,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1/30"
-                    android:textColor="white"
+                    android:textColor="#FFFFFF"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_marginTop="1dp" />
@@ -507,7 +507,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="11.6 dpt"
-                    android:textColor="white"
+                    android:textColor="#FFFFFF"
                     android:textSize="11sp"
                     android:textStyle="bold"
                     android:layout_marginTop="1dp" />
@@ -533,7 +533,7 @@
                     android:background="@drawable/bg_toggle_selected"
                     android:gravity="center"
                     android:text="▶"
-                    android:textColor="white"
+                    android:textColor="#FFFFFF"
                     android:textSize="12sp" />
 
                 <TextView
@@ -583,7 +583,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+0.0"
-                    android:textColor="white"
+                    android:textColor="#FFFFFF"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_marginTop="1dp" />
@@ -616,7 +616,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="AWB"
-                    android:textColor="white"
+                    android:textColor="#FFFFFF"
                     android:textSize="11sp"
                     android:textStyle="bold"
                     android:layout_marginTop="1dp" />
@@ -649,7 +649,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="EIS"
-                    android:textColor="white"
+                    android:textColor="#FFFFFF"
                     android:textSize="11sp"
                     android:textStyle="bold"
                     android:layout_marginTop="1dp" />
